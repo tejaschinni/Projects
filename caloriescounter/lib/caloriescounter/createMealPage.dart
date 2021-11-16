@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:caloriescounter/data/food.dart';
 import 'package:caloriescounter/data/recipiesData.dart';
 import 'package:caloriescounter/demo/selectedOptionTab.dart';
@@ -261,88 +263,181 @@ class _CreateMealPageState extends State<CreateMealPage> {
                   child: ListView.builder(
                       itemCount: temp.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(temp[index].name),
-                          subtitle: Text(temp[index].gram),
-                          trailing: InkWell(
-                            child: Icon(Icons.delete),
-                            onTap: () {
-                              setState(() {
-                                tgram = tgram - int.parse(temp[index].gram);
-                                tcal = tcal - int.parse(temp[index].calories);
-                                tcab = tcab - int.parse(temp[index].carbon);
-                                tfat = tfat - int.parse(temp[index].fats);
-                                tprot = tprot - int.parse(temp[index].protein);
+                        return Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 70,
+                                    child: Text(
+                                      temp[index].name,
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  Text(temp[index].gram + ' g',
+                                      style: TextStyle(color: Colors.grey)),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  Text(
+                                    temp[index].calories + ' c \t',
+                                    style: TextStyle(color: Colors.pink[300]),
+                                  ),
+                                  Text(temp[index].carbon + ' c \t',
+                                      style: TextStyle(
+                                          color: Colors.deepPurpleAccent[400])),
+                                  Text(temp[index].fats + ' f \t',
+                                      style:
+                                          TextStyle(color: Colors.orange[400])),
+                                  Text(temp[index].protein + ' p \t',
+                                      style: TextStyle(
+                                          color: Colors.redAccent[200])),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.08,
+                                  ),
+                                  InkWell(
+                                    child: Icon(
+                                        Icons.cancel_presentation_outlined),
+                                    onTap: () {
+                                      setState(() {
+                                        tgram =
+                                            tgram - int.parse(temp[index].gram);
+                                        tcal = tcal -
+                                            int.parse(temp[index].calories);
+                                        tcab = tcab -
+                                            int.parse(temp[index].carbon);
+                                        tfat =
+                                            tfat - int.parse(temp[index].fats);
+                                        tprot = tprot -
+                                            int.parse(temp[index].protein);
 
-                                temp.removeAt(index);
-                              });
-                            },
+                                        temp.removeAt(index);
+                                      });
+                                    },
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         );
+                        // ListTile(
+                        //   title: Text(temp[index].name),
+                        //   subtitle: Text(temp[index].gram),
+                        //   trailing: InkWell(
+                        //     child: Icon(Icons.delete),
+                        //     onTap: () {
+                        //       setState(() {
+                        //         tgram = tgram - int.parse(temp[index].gram);
+                        //         tcal = tcal - int.parse(temp[index].calories);
+                        //         tcab = tcab - int.parse(temp[index].carbon);
+                        //         tfat = tfat - int.parse(temp[index].fats);
+                        //         tprot = tprot - int.parse(temp[index].protein);
+
+                        //         temp.removeAt(index);
+                        //       });
+                        //     },
+                        //   ),
+                        // );
                       }),
                 )),
             Expanded(
-                child: Container(
-              padding: EdgeInsets.all(10),
-              child: ElevatedButton(
-                child: Text(
-                  'Submit Your Meal',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    // _addMeal();
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (BuildContext context) => leadDialog);
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          // shape: RoundedRectangleBorder(
-                          //     borderRadius: BorderRadius.circular(40)),
-                          elevation: 16,
-                          child: Container(
-                              child: Column(
-                            children: [
-                              ListView.builder(
-                                  itemCount: temp.length,
-                                  itemBuilder: (context, index) {
-                                    return _buildRow(temp[index].name,
-                                        double.parse(temp[index].gram));
-                                  }),
-                              Expanded(
-                                  child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: -10,
-                                    child: Image.asset(
-                                      'assets/image3.png',
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.2,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                      //scale: 0.1,
-                                      fit: BoxFit.fill,
-                                      alignment: Alignment.bottomCenter,
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          )),
-                        );
-                      },
-                    );
-                  });
-                },
-              ),
-            ))
+                flex: 2,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      bottom: -10,
+                      child: Image.asset(
+                        'assets/image3.png',
+                        height: MediaQuery.of(context).size.height * 0.14,
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        //scale: 0.1,
+                        fit: BoxFit.fill,
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
+                    Positioned(
+                      left: 70,
+                      bottom: -10,
+                      child: Image.asset(
+                        'assets/image2.png',
+                        height: MediaQuery.of(context).size.height * 0.14,
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        //scale: 0.1,
+                        fit: BoxFit.fill,
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
+                    Positioned(
+                      left: 140,
+                      bottom: -25,
+                      child: Image.asset(
+                        'assets/image1.png',
+                        height: MediaQuery.of(context).size.height * 0.14,
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        //scale: 0.1,
+                        fit: BoxFit.fill,
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
+                    Positioned(
+                      left: 210,
+                      bottom: -15,
+                      child: Image.asset(
+                        'assets/image4.png',
+                        height: MediaQuery.of(context).size.height * 0.14,
+                        width: MediaQuery.of(context).size.width * 0.14,
+                        //scale: 0.1,
+                        fit: BoxFit.fill,
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ],
+                )),
+            // Expanded(
+            //     child: Container(
+            //   padding: EdgeInsets.all(10),
+            //   child: ElevatedButton(
+            //     child: Text(
+            //       'Submit Your Meal',
+            //       style: TextStyle(
+            //         fontSize: 18,
+            //         color: Colors.black,
+            //       ),
+            //     ),
+            //     onPressed: () {
+            //       setState(() {
+            //         // _addMeal();
+            //         showDialog(
+            //             context: context,
+            //             builder: (BuildContext context) => leadDialog);
+            //       });
+            //     },
+            //   ),
+            // ))
           ],
+        ),
+      ),
+      floatingActionButton: SizedBox(
+        child: FloatingActionButton(
+          backgroundColor: Colors.deepPurple[900],
+          // shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          child: Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              // _addMeal();
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => leadDialog);
+            });
+          },
         ),
       ),
     );
@@ -433,8 +528,11 @@ class _CreateMealPageState extends State<CreateMealPage> {
                 children: [
                   Row(
                     children: [
-                      InkWell(
-                        child: Icon(Icons.cancel_presentation_rounded),
+                      Positioned(
+                        left: 0,
+                        child: InkWell(
+                          child: Icon(Icons.cancel_presentation_rounded),
+                        ),
                       )
                     ],
                   )
