@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           isWorking = false;
         });
-        Get.off(UserRegisterPage(widget.gUser, widget.signOut));
+        Get.off(() => UserRegisterPage(widget.gUser, widget.signOut));
         // Navigator.pushReplacement(
         //     context,
         //     MaterialPageRoute(
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 onTap: () {
                   widget.signOut();
-                  Get.off(UserRegisterPage(widget.gUser, widget.signOut));
+                  Get.off(() => UserRegisterPage(widget.gUser, widget.signOut));
                 },
               ),
             )

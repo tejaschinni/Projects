@@ -46,6 +46,8 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
   DateTime dateTime =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
+  // DateTime selectedDate = DateTime.now();
+
   CollectionReference collection =
       FirebaseFirestore.instance.collection('caloriecounter');
 
@@ -95,7 +97,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
               child: Icon(Icons.person),
               onTap: () {
                 widget.signOut();
-                Get.off(SignInPage());
+                Get.off(() => SignInPage());
               },
             ),
           )
@@ -117,206 +119,405 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
               //     ),
               //   ),
               // ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('User Name'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 6, right: 6),
-                      child: TextField(
-                        controller: userNameController,
-                        onChanged: (String val) {
-                          setState(() {
-                            name = val;
-                          });
-                        },
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  controller: userNameController,
+                  onChanged: (String val) {
+                    setState(() {
+                      name = val;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'UserName',
+                      prefixIcon: Icon(
+                        Icons.person_outline,
+                        color: Colors.black,
                       ),
-                    ),
-                  ),
-                ],
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Gender'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: DropdownButton(
-                      value: gender,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      items: item.map((String items) {
-                        return DropdownMenuItem(
-                            value: items, child: Text(items));
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          gender = value.toString();
-                        });
-                      },
-                    ),
-                  )
-                ],
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  decoration: InputDecoration(
+                      hintText: 'Full Name',
+                      prefixIcon: Icon(
+                        Icons.person_outline,
+                        color: Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('DOB'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, right: 10),
-                      child: DateTimePicker(
-                        initialValue: '',
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                        dateLabelText: 'Date',
-                        onChanged: (val) {
-                          dateTime = DateTime.parse(val);
-                        },
-                        validator: (val) {
-                          print(val);
-                          return null;
-                        },
-                        onSaved: (val) => print(val),
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  decoration: InputDecoration(
+                      hintText: 'Email',
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: Colors.black,
                       ),
-                    ),
-                  ),
-                ],
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Height'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, right: 10),
-                      child: TextField(
-                        controller: heightController,
-                        onChanged: (String val) {
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      hintText: 'Password',
+                      prefixIcon: Icon(
+                        Icons.lock_outline_rounded,
+                        color: Colors.black,
+                      ),
+                      suffixIcon: Icon(Icons.visibility_off_rounded),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  decoration: InputDecoration(
+                      hintText: 'Chose Gender',
+                      suffixIcon: DropdownButton(
+                        value: gender,
+                        icon: Icon(Icons.keyboard_arrow_down),
+                        items: item.map((String items) {
+                          return DropdownMenuItem(
+                              value: items, child: Text(items));
+                        }).toList(),
+                        onChanged: (value) {
                           setState(() {
-                            height = double.parse(val);
+                            gender = value.toString();
                           });
                         },
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
                       ),
-                    ),
-                  ),
-                ],
+                      prefixIcon: Icon(
+                        Icons.person_add_alt_outlined,
+                        color: Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('weight'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 8, right: 10),
-                      child: TextField(
-                        controller: weigthController,
-                        keyboardType: TextInputType.number,
-                        onChanged: (String val) {
-                          setState(() {
-                            weigth = int.parse(val);
-                          });
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  decoration: InputDecoration(
+                      hintText: dateTime.day.toString() +
+                          '/' +
+                          dateTime.month.toString() +
+                          '/' +
+                          dateTime.year.toString(),
+                      prefixIcon: Icon(
+                        Icons.calendar_today_rounded,
+                        color: Colors.black,
+                      ),
+                      suffixIcon: InkWell(
+                        child: Icon(Icons.calendar_view_month),
+                        onTap: () {
+                          dateBOD();
                         },
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
                       ),
-                    ),
-                  ),
-                ],
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Height'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                ],
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  controller: weigthController,
+                  keyboardType: TextInputType.number,
+                  onChanged: (String val) {
+                    setState(() {
+                      weigth = int.parse(val);
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'weight',
+                      prefixIcon: Icon(
+                        Icons.monitor_weight_sharp,
+                        color: Colors.black,
+                      ),
+                      suffixIcon: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: Colors.greenAccent,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text("KG"),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Goal'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                ],
+              Container(
+                //padding: EdgeInsets.all(20),
+                child: TextField(
+                  controller: heightController,
+                  onChanged: (String val) {
+                    setState(() {
+                      height = double.parse(val);
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'Height',
+                      prefixIcon: Icon(
+                        Icons.person_outline,
+                        color: Colors.black,
+                      ),
+                      suffixIcon: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: Colors.orangeAccent,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text("CM"),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(29))),
+                ),
               ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('User Name'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.only(top: 6, right: 6),
+              //         child: TextField(
+              //           controller: userNameController,
+              //           onChanged: (String val) {
+              //             setState(() {
+              //               name = val;
+              //             });
+              //           },
+              //           decoration: InputDecoration(
+              //               border: OutlineInputBorder(
+              //                   borderRadius: BorderRadius.circular(10))),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Container(
+              //   //padding: EdgeInsets.all(20),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //         hintText: 'Full Name',
+              //         prefixIcon: Icon(
+              //           Icons.person_outline,
+              //           color: Colors.black,
+              //         ),
+              //         border: OutlineInputBorder(
+              //             borderSide: BorderSide.none,
+              //             borderRadius: BorderRadius.circular(29))),
+              //   ),
+              // ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('Gender'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: DropdownButton(
+              //         value: gender,
+              //         icon: Icon(Icons.keyboard_arrow_down),
+              //         items: item.map((String items) {
+              //           return DropdownMenuItem(
+              //               value: items, child: Text(items));
+              //         }).toList(),
+              //         onChanged: (value) {
+              //           setState(() {
+              //             gender = value.toString();
+              //           });
+              //         },
+              //       ),
+              //     )
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('DOB'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.only(top: 8, right: 10),
+              //         child: DateTimePicker(
+              //           initialValue: '',
+              //           firstDate: DateTime(2000),
+              //           lastDate: DateTime(2100),
+              //           dateLabelText: 'Date',
+              //           onChanged: (val) {
+              //             dateTime = DateTime.parse(val);
+              //           },
+              //           validator: (val) {
+              //             print(val);
+              //             return null;
+              //           },
+              //           onSaved: (val) => print(val),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('Height'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.only(top: 8, right: 10),
+              //         child: TextField(
+              //           controller: heightController,
+              //           onChanged: (String val) {
+              //             setState(() {
+              //               height = double.parse(val);
+              //             });
+              //           },
+              //           decoration: InputDecoration(
+              //               border: OutlineInputBorder(
+              //                   borderRadius: BorderRadius.circular(10))),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('weight'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.only(top: 8, right: 10),
+              //         child: TextField(
+              //           controller: weigthController,
+              //           keyboardType: TextInputType.number,
+              //           onChanged: (String val) {
+              //             setState(() {
+              //               weigth = int.parse(val);
+              //             });
+              //           },
+              //           decoration: InputDecoration(
+              //               border: OutlineInputBorder(
+              //                   borderRadius: BorderRadius.circular(10))),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('Height'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         child: Text('Goal'),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         height: 50,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -356,6 +557,19 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
       }
       //BMR for Women = 655.1 + (9.563 * weight [kg]) + (1.85 * size [cm]) − (4.676 * age [years])
     });
+  }
+
+  void dateBOD() async {
+    final DateTime? _date = await showDatePicker(
+        context: context,
+        initialDate: dateTime,
+        firstDate: DateTime(1, 1, 1900),
+        lastDate: DateTime.now());
+    if (_date != null && _date != dateTime)
+      setState(() {
+        dateTime = _date;
+      });
+    print('-=================' + dateTime.toString());
   }
 
   void _read() async {

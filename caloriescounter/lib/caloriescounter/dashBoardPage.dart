@@ -49,7 +49,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     _getDateTime();
     _readUserRecipeList();
     getList(http.Client());
-    // _readUser();
+    _readUser();
   }
 
   @override
@@ -343,7 +343,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
         setState(() {
           isWorking = false;
         });
-        Get.off(UserRegisterPage(widget.gUser, widget.signOut));
+        Get.off(() => UserRegisterPage(widget.gUser, widget.signOut));
       }
     });
   }

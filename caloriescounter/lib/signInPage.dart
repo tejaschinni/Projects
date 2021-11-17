@@ -56,8 +56,11 @@ class _SignInPageState extends State<SignInPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
+            SizedBox(
+              height: 20,
+            ),
             Expanded(
-                flex: 4,
+                flex: 5,
                 child: Container(
                     child: ClipRRect(
                   borderRadius: BorderRadius.circular(40),
@@ -160,7 +163,7 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: 10,
                         ),
                         Text(
                           'Countinue With FaceBook ',

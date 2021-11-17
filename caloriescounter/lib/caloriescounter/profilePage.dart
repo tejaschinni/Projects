@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     _readUserdetails();
     _read();
-    _readUser();
+    // _readUser();
   }
 
   setSelectedRadioTile(int val) {
@@ -89,20 +89,20 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  void _readUser() {
-    FirebaseFirestore.instance
-        .collection("caloriecounter")
-        .doc(widget.gUser.email.toString())
-        .get()
-        .then((value) {
-      if (value.data() == null) {
-        setState(() {
-          isWorking = false;
-        });
-        Get.off(UserRegisterPage(widget.gUser, widget.signOut));
-      }
-    });
-  }
+  // void _readUser() {
+  //   FirebaseFirestore.instance
+  //       .collection("caloriecounter")
+  //       .doc(widget.gUser.email.toString())
+  //       .get()
+  //       .then((value) {
+  //     if (value.data() == null) {
+  //       setState(() {
+  //         isWorking = false;
+  //       });
+  //       Get.off(() => UserRegisterPage(widget.gUser, widget.signOut));
+  //     }
+  //   });
+  // }
 
   void chartData() {
     double tcol = _bmr;

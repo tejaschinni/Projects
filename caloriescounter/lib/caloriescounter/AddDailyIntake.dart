@@ -286,7 +286,7 @@ class _AddDailyInTakeState extends State<AddDailyInTake> {
             protiens = 0;
             calories = 0;
             carbon = 0;
-            Get.off(HomePage(widget.gUser, widget.signOut));
+            Get.off(() => HomePage(widget.gUser, widget.signOut));
             // Navigator.pushReplacement(
             //     context,
             //     MaterialPageRoute(
