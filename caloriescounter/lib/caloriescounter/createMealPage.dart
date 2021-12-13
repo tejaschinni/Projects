@@ -5,6 +5,7 @@ import 'package:caloriescounter/data/recipiesData.dart';
 import 'package:caloriescounter/demo/selectedOptionTab.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -64,10 +65,12 @@ class _CreateMealPageState extends State<CreateMealPage> {
 
   List<PieChartSectionData> data = [
     PieChartSectionData(
-        title: " ", color: Colors.greenAccent, value: 0, radius: 5),
+        title: " ", color: Colors.greenAccent, value: 0, radius: 25),
     PieChartSectionData(
-        title: "20,1 ", color: Colors.purple[200], value: 100, radius: 10),
+        title: "20,1 ", color: Colors.purple[200], value: 100, radius: 30),
   ];
+
+  List<PieChartSectionData> calData = [];
 
   void validate() {
     if (mealNameController.text.length > 2) {
@@ -144,23 +147,28 @@ class _CreateMealPageState extends State<CreateMealPage> {
                       children: [
                         Column(
                           children: [
-                            CircleAvatar(
-                                backgroundColor: Colors.redAccent,
-                                radius:
-                                    MediaQuery.of(context).size.width * 0.07,
-                                child: Text(
-                                  tcal.toString(),
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                )),
                             SizedBox(
                               height: 10,
                             ),
-                            Container(
-                              child: Text('Calories',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.black)),
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: MediaQuery.of(context).size.width * 0.08,
+                              child: PieChart(
+                                PieChartData(
+                                    startDegreeOffset: 3,
+                                    centerSpaceRadius: 0,
+                                    sectionsSpace: 0,
+                                    // borderData: FlBorderData(show: false),
+                                    sections: calData),
+                                swapAnimationDuration:
+                                    Duration(milliseconds: 150), // Optional
+                                swapAnimationCurve: Curves.linear, // Optional
+                              ),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text('Cabrs')
                           ],
                         ),
                         SizedBox(
@@ -336,24 +344,6 @@ class _CreateMealPageState extends State<CreateMealPage> {
                             ],
                           ),
                         );
-                        // ListTile(
-                        //   title: Text(temp[index].name),
-                        //   subtitle: Text(temp[index].gram),
-                        //   trailing: InkWell(
-                        //     child: Icon(Icons.delete),
-                        //     onTap: () {
-                        //       setState(() {
-                        //         tgram = tgram - int.parse(temp[index].gram);
-                        //         tcal = tcal - int.parse(temp[index].calories);
-                        //         tcab = tcab - int.parse(temp[index].carbon);
-                        //         tfat = tfat - int.parse(temp[index].fats);
-                        //         tprot = tprot - int.parse(temp[index].protein);
-
-                        //         temp.removeAt(index);
-                        //       });
-                        //     },
-                        //   ),
-                        // );
                       }),
                 )),
             Expanded(
@@ -409,27 +399,6 @@ class _CreateMealPageState extends State<CreateMealPage> {
                     ),
                   ],
                 )),
-            // Expanded(
-            //     child: Container(
-            //   padding: EdgeInsets.all(10),
-            //   child: ElevatedButton(
-            //     child: Text(
-            //       'Submit Your Meal',
-            //       style: TextStyle(
-            //         fontSize: 18,
-            //         color: Colors.black,
-            //       ),
-            //     ),
-            //     onPressed: () {
-            //       setState(() {
-            //         // _addMeal();
-            //         showDialog(
-            //             context: context,
-            //             builder: (BuildContext context) => leadDialog);
-            //       });
-            //     },
-            //   ),
-            // ))
           ],
         ),
       ),
@@ -509,6 +478,19 @@ class _CreateMealPageState extends State<CreateMealPage> {
                   tcab = tcab + int.parse(carbonController.text);
                   tfat = tfat + int.parse(fatsController.text);
                   tprot = tprot + int.parse(protiensController.text);
+
+                  calData = [
+                    PieChartSectionData(
+                        title: " ",
+                        color: Colors.greenAccent,
+                        value: tcal.floor().toDouble(),
+                        radius: 25),
+                    PieChartSectionData(
+                        title: "20,1 ",
+                        color: Colors.purple[200],
+                        value: 100,
+                        radius: 30),
+                  ];
                 });
 
                 print(' Meal ingrednet-------------------' +
@@ -584,6 +566,37 @@ class _CreateMealPageState extends State<CreateMealPage> {
                       ],
                     ),
                     SizedBox(
+                      width: 25,
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: MediaQuery.of(context).size.width * 0.06,
+                            child: PieChart(
+                              PieChartData(
+                                  startDegreeOffset: 3,
+                                  centerSpaceRadius: 0,
+                                  sectionsSpace: 0,
+                                  // borderData: FlBorderData(show: false),
+                                  sections: data),
+                              swapAnimationDuration:
+                                  Duration(milliseconds: 150), // Optional
+                              swapAnimationCurve: Curves.linear, // Optional
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Calories',
+                          style: TextStyle(fontSize: 10),
+                        )
+                      ],
+                    ),
+                    SizedBox(
                       width: 30,
                     ),
                     Column(
@@ -615,38 +628,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                       ],
                     ),
                     SizedBox(
-                      width: 35,
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: MediaQuery.of(context).size.width * 0.06,
-                            child: PieChart(
-                              PieChartData(
-                                  startDegreeOffset: 3,
-                                  centerSpaceRadius: 0,
-                                  sectionsSpace: 0,
-                                  // borderData: FlBorderData(show: false),
-                                  sections: data),
-                              swapAnimationDuration:
-                                  Duration(milliseconds: 150), // Optional
-                              swapAnimationCurve: Curves.linear, // Optional
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Calories',
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 35,
+                      width: 30,
                     ),
                     Column(
                       children: [
@@ -933,4 +915,11 @@ class _CreateMealPageState extends State<CreateMealPage> {
     Get.back();
     DefaultTabController.of(context)!.animateTo(0);
   }
+}
+
+class ChartData3 {
+  ChartData3(this.x, this.y, this.color);
+  final String x;
+  final double y;
+  final Color color;
 }

@@ -5,6 +5,7 @@ import 'package:caloriescounter/data/food.dart';
 import 'package:caloriescounter/data/recipiesData.dart';
 import 'package:caloriescounter/jsonParsing/libraryFood.dart';
 import 'package:caloriescounter/jsonParsing/parse.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -35,7 +36,7 @@ class _SelectOptionTabState extends State<SelectOptionTab> {
             Container(
               padding: EdgeInsets.all(10),
               child: InkWell(
-                child: Icon(Icons.home),
+                child: Icon(EvaIcons.homeOutline),
                 onTap: () {
                   widget.signOut();
                 },

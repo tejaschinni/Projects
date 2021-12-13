@@ -8,9 +8,10 @@ class RecipiesListSearchPage extends StatefulWidget {
   GoogleSignInAccount gUser;
   List<Recipies> userRecipeList;
   DateTime selectedDate;
+  Function showBox;
   Function setRecipeValue;
   RecipiesListSearchPage(this.gUser, this.selectedDate, this.signOut,
-      this.userRecipeList, this.setRecipeValue);
+      this.userRecipeList, this.setRecipeValue, this.showBox);
 
   @override
   _RecipiesListSearchPageState createState() => _RecipiesListSearchPageState();
@@ -155,6 +156,7 @@ class _RecipiesListSearchPageState extends State<RecipiesListSearchPage> {
                               _foundRecipe[index].carbon,
                               _foundRecipe[index].protines,
                               _foundRecipe[index].fats);
+                          widget.showBox();
 
                           print("On clicked on a particular recipe");
                           print('--------------------' +

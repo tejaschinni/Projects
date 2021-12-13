@@ -1,3 +1,4 @@
+import 'package:caloriescounter/demo/demo.dart';
 import 'package:caloriescounter/signInPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

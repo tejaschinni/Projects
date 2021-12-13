@@ -1,5 +1,6 @@
 import 'package:caloriescounter/caloriescounter/dashBoardPage.dart';
 import 'package:caloriescounter/caloriescounter/recipiesListSearchPage.dart';
+import 'package:caloriescounter/data/food.dart';
 import 'package:caloriescounter/data/recipiesData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _AddFoodState extends State<AddFood> {
       FirebaseFirestore.instance.collection('caloriecounter');
 
   bool validator = true;
+  List<Food> temp = [];
 
   String name = ' ';
   int grams = 0,
@@ -238,7 +240,8 @@ class _AddFoodState extends State<AddFood> {
                           widget.selectedDate,
                           widget.signOut,
                           widget.userRecipeList,
-                          setRecipeValue))),
+                          setRecipeValue,
+                          _showMyDialog))),
               Expanded(
                   flex: 2,
                   child: Stack(
@@ -378,6 +381,77 @@ class _AddFoodState extends State<AddFood> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            child: Row(
+              children: [
+                Expanded(
+                    child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          nameController.text,
+                          style: TextStyle(fontSize: 18),
+                        ))),
+                SizedBox(
+                  height: 40,
+                  width: 80,
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: gramsController,
+                    keyboardType: TextInputType.number,
+                    onChanged: (String val) {
+                      setState(() {
+                        __gram = int.parse(val);
+                      });
+
+                      onGramchange();
+                    },
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                setState(() {
+                  Food f = Food(
+                      gram: gramsController.text,
+                      calories: caloriesController.text,
+                      fats: fatsController.text,
+                      protein: protiensController.text,
+                      carbon: carbonController.text,
+                      name: nameController.text);
+                  temp.add(f);
+
+                  tgram = tgram + int.parse(gramsController.text);
+                  tcal = tcal + int.parse(caloriesController.text);
+                  tcab = tcab + int.parse(carbonController.text);
+                  tfat = tfat + int.parse(fatsController.text);
+                  tprot = tprot + int.parse(protiensController.text);
+                });
+
+                print(' Meal ingrednet-------------------' +
+                    temp.length.toString());
+                Get.back();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void setRecipeValue(
