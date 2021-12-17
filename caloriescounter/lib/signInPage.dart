@@ -50,7 +50,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _buildBody() {
     GoogleSignInAccount? user = _currentUser;
     if (user != null) {
-      return HomePage(user, _handleSignOut);
+      return DashBoardPage(user, _handleSignOut);
     } else {
       return SafeArea(
         child: Column(

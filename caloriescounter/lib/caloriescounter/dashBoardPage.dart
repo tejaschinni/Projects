@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:caloriescounter/caloriescounter/addFood.dart';
 import 'package:caloriescounter/caloriescounter/flutterDateTime.dart';
 import 'package:caloriescounter/caloriescounter/nutritionPerDay.dart';
+import 'package:caloriescounter/caloriescounter/profilePage.dart';
+import 'package:caloriescounter/caloriescounter/selectedOptionTab.dart';
 import 'package:caloriescounter/caloriescounter/userRegisterPage.dart';
 import 'package:caloriescounter/data/food.dart';
 import 'package:caloriescounter/data/recipiesData.dart';
-import 'package:caloriescounter/demo/selectedOptionTab.dart';
 import 'package:caloriescounter/signInPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:http/http.dart' as http;
 
@@ -58,6 +58,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
       onWillPop: () => _onWillPop(),
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.deepPurple[900],
             child: Icon(Icons.add),
             onPressed: () {
               setState(() {
@@ -112,6 +113,66 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           children: [
                             SizedBox(
                               height: 10,
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              child: Row(
+                                children: [
+                                  Container(),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      'Calories Counter ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                  ),
+                                  Container(
+                                    width: 20,
+                                    padding: EdgeInsets.zero,
+                                    child: PopupMenuButton<String>(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.settings),
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<String>>[
+                                        const PopupMenuItem<String>(
+                                          value: 'Profile',
+                                          child: ListTile(
+                                            leading: Icon(Icons.visibility),
+                                            title: Text('Proflie'),
+                                          ),
+                                        ),
+                                        const PopupMenuItem<String>(
+                                          value: 'SignOut',
+                                          child: ListTile(
+                                            leading: Icon(Icons.person_add),
+                                            title: Text('SignOut'),
+                                          ),
+                                        ),
+                                      ],
+                                      onSelected: (String s) {
+                                        print(s);
+                                        if (s == 'SignOut') {
+                                          widget.signOut();
+                                          Get.offAll(() => SignInPage());
+                                        }
+                                        if (s == 'Profile') {
+                                          setState(() {
+                                            Get.to(() => ProfilePage(
+                                                widget.gUser, widget.signOut));
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                             Expanded(
                                 flex: 2,

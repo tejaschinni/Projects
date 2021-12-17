@@ -1,14 +1,13 @@
 import 'package:caloriescounter/caloriescounter/setGoal.dart';
 import 'package:caloriescounter/caloriescounter/userRegisterPage.dart';
-import 'package:caloriescounter/demo/dropDownDemo.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pie_chart/pie_chart.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ProfilePage extends StatefulWidget {
   Function signOut;
@@ -34,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String bmi = '0';
   double bmr = 0.0;
+  double _bmichange = 0.0;
   String name = '', gender = '';
   Timestamp startTimestamp = Timestamp.now();
   late DateTime dob;
@@ -45,15 +45,18 @@ class _ProfilePageState extends State<ProfilePage> {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   int _value = 0;
+  bool _isEnable_weight = false;
+  bool _isEnable_height = false;
+  double d = 0.0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    heightController.text = height.toString();
+    // heightController.text = height.toString();
     // userNameController.text = name;
-    weigthController.text = weigth.toString();
+    // weigthController.text = weigth.toString();
     setState(() {
       _value = 1;
       selectedRadio = 0;
@@ -61,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     _readUserdetails();
     _read();
-    // _readUser();
+    _readUser();
   }
 
   setSelectedRadioTile(int val) {
@@ -89,31 +92,19 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  // void _readUser() {
-  //   FirebaseFirestore.instance
-  //       .collection("caloriecounter")
-  //       .doc(widget.gUser.email.toString())
-  //       .get()
-  //       .then((value) {
-  //     if (value.data() == null) {
-  //       setState(() {
-  //         isWorking = false;
-  //       });
-  //       Get.off(() => UserRegisterPage(widget.gUser, widget.signOut));
-  //     }
-  //   });
-  // }
-
-  void chartData() {
-    double tcol = _bmr;
-    Map<String, double> dataMap = {
-      "SetBMR": tcol,
-      "Total calories": 3,
-    };
-    List<Color> colorList = [
-      Colors.red,
-      Colors.green,
-    ];
+  void _readUser() {
+    FirebaseFirestore.instance
+        .collection("caloriecounter")
+        .doc(widget.gUser.email.toString())
+        .get()
+        .then((value) {
+      if (value.data() == null) {
+        setState(() {
+          isWorking = false;
+        });
+        Get.off(UserRegisterPage(widget.gUser, widget.signOut));
+      }
+    });
   }
 
   Map<String, double> dataMap = {
@@ -133,6 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
       //  print(bmi.toString().substring(0, 5));
       if (bmi.contains('.')) {
         bmi = bmi.toString();
+
         // bmr = bmr.toString();
       }
       var difference =
@@ -176,6 +168,12 @@ class _ProfilePageState extends State<ProfilePage> {
           Timestamp t = value["DOB"];
           startDateTime =
               DateTime.fromMicrosecondsSinceEpoch(t.microsecondsSinceEpoch);
+
+          userNameController.text = name;
+          heightController.text = height.toString();
+          weigthController.text = weigth.toString();
+          bmi = _bmi.toString();
+          bmr = _bmr;
         });
         // calculate();
       });
@@ -185,82 +183,328 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            print('-------' + name);
-            print('weight---------' + weigth.toString());
-            print('height---------' + height.toString());
-            print('______bmr-' + _bmi.toString());
-          });
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       print('-------' + name);
+      //       print('weight---------' + weigth.toString());
+      //       print('height---------' + height.toString());
+      //       print('______bmr-' + _bmi.toString());
+      //     });
+      //   },
+      // ),
       body: SafeArea(
         child: DelayedDisplay(
           delay: Duration(seconds: 1),
           child: Container(
             child: Column(
               children: [
-                ListTile(
-                  title: Text('User Name '),
-                  trailing: Text(name),
-                ),
-                ListTile(
-                  title: Text('Height '),
-                  trailing: Text(height.toString()),
-                ),
-                ListTile(
-                  title: Text('weight '),
-                  trailing: Text(weigth.toString()),
-                ),
-                // ListTile(
-                //   title: Text('Weight '),
-                //   trailing: Container(
-                //     width: 60,
-                //     child: Row(
-                //       children: [
-                //         Expanded(
-                //           child: TextField(
-                //             controller: weigthController,
-                //             onChanged: (String val) {
-                //               setState(() {
-                //                 val = weigth.toString();
-                //               });
-                //             },
-                //             keyboardType: TextInputType.number,
-                //             decoration: InputDecoration(
-                //               border: OutlineInputBorder(),
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                ListTile(
-                  title: Text('BMI'),
-                  trailing: Text(_bmi.floor().toString()),
-                ),
-                ListTile(
-                  title: Text('BMR'),
-                  trailing: Text(_bmr.floor().toString()),
-                ),
-                ListTile(
-                  title: Text('DOB'),
-                  trailing: Text(startDateTime.day.toString() +
-                      '-' +
-                      startDateTime.month.toString() +
-                      '-' +
-                      startDateTime.year.toString()),
-                ),
-                ListTile(
-                  title: Text('Goal'),
-                  trailing: Icon(Icons.forward),
-                  onTap: () {
-                    Get.to(() => SetGoal(widget.gUser, widget.signOut));
-                  },
-                ),
-                Text(requreBmr.floor().toString()),
+                Expanded(
+                    flex: 5,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: InkWell(
+                                      child: Icon(Icons.arrow_back),
+                                      onTap: () {
+                                        setState(() {
+                                          Get.back();
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      'User Profile ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.46,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: FaIcon(FontAwesomeIcons.home),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.person_outline,
+                                  color: Colors.black,
+                                ),
+                                title: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(name),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Icon(Icons.height_outlined),
+                                title: Container(
+                                  child: TextField(
+                                    enabled: _isEnable_height,
+                                    controller: heightController,
+                                    onChanged: (String val) {
+                                      setState(() {
+                                        height = double.parse(val);
+                                        print(val);
+                                      });
+                                      calculate();
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: 'Heignt',
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(29))),
+                                  ),
+                                ),
+                                trailing: Container(
+                                  child: InkWell(
+                                    child: Icon(_isEnable_height
+                                        ? Icons.edit
+                                        : Icons.edit_off),
+                                    onTap: () {
+                                      setState(() {
+                                        _isEnable_height = !_isEnable_height;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.monitor_weight_outlined,
+                                  color: Colors.black,
+                                ),
+                                title: Container(
+                                  child: TextField(
+                                    enabled: _isEnable_weight,
+                                    controller: weigthController,
+                                    onChanged: (String val) {
+                                      setState(() {
+                                        weigth = int.parse(val);
+                                      });
+                                      calculate();
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: 'Weight',
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(29))),
+                                  ),
+                                ),
+                                trailing: Container(
+                                  child: InkWell(
+                                    child: Icon(_isEnable_weight
+                                        ? Icons.edit
+                                        : Icons.edit_off),
+                                    onTap: () {
+                                      setState(() {
+                                        _isEnable_weight = !_isEnable_weight;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.date_range_outlined,
+                                  color: Colors.black,
+                                ),
+                                title: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(startDateTime.day.toString() +
+                                      '-' +
+                                      startDateTime.month.toString() +
+                                      '-' +
+                                      startDateTime.year.toString()),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.person_outline,
+                                  color: Colors.black,
+                                ),
+                                title: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(gender),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Text('BMR'),
+                                title: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(bmr.floor().toString()),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                leading: Text('BMI'),
+                                title: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(bmi.toString()),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: LinearProgressIndicator(
+                                backgroundColor: Colors.red,
+                                value: d,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    getIndigatorColor(d)),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
+                Expanded(
+                    child: Container(
+                  child: Stack(
+                    children: [
+                      Positioned(child: Container()),
+                      Positioned(
+                        bottom: -10,
+                        left: 10,
+                        child: Container(
+                          alignment: Alignment.bottomLeft,
+                          child: Image.asset(
+                            'assets/image3.png',
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            //scale: 0.1,
+                            fit: BoxFit.fill,
+                            alignment: Alignment.bottomLeft,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: -10,
+                        left: 70,
+                        child: Container(
+                          alignment: Alignment.bottomLeft,
+                          child: Image.asset(
+                            'assets/image2.png',
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            //scale: 0.1,
+                            fit: BoxFit.fill,
+                            alignment: Alignment.bottomLeft,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: -10,
+                        left: 120,
+                        child: Container(
+                          alignment: Alignment.bottomLeft,
+                          child: Image.asset(
+                            'assets/image1.png',
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            //scale: 0.1,
+                            fit: BoxFit.fill,
+                            alignment: Alignment.bottomLeft,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: -10,
+                        left: 170,
+                        child: Container(
+                          alignment: Alignment.bottomLeft,
+                          child: Image.asset(
+                            'assets/image4.png',
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            //scale: 0.1,
+                            fit: BoxFit.fill,
+                            alignment: Alignment.bottomLeft,
+                          ),
+                        ),
+                      ),
+                      SizedBox(),
+                      Positioned(
+                        bottom: 20,
+                        left: 230,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              // calculate();
+                              print(
+                                  '===============================================');
+                              // updateuserData();
+                            });
+                          },
+                          child: Text('Update'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo.shade700,
+                            //onPrimary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 20,
+                        left: 320,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              Get.to(
+                                  () => SetGoal(widget.gUser, widget.signOut));
+                            });
+                          },
+                          child: Text('SetGoal'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo.shade700,
+                            //minimumSize: Size(70, 50),
+                            //onPrimary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ))
               ],
             ),
           ),
@@ -270,7 +514,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _read() async {
-    //print(' My email  = ' + widget.gUser.email.toString());
     DocumentSnapshot documentSnapshot;
     try {
       documentSnapshot = await firestore
@@ -299,56 +542,16 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   double getBMRratio() {
-    return todaycal / bmr;
+    return d = todaycal / bmr;
   }
 
-  void selectGoal(int val) {
-    setState(() {
-      if (_value == 1) {
-        print('Loss weight in 7 days');
-      } else if (_value == 2) {
-        print('Loss weight in 7 days');
-      } else if (_value == 3) {
-        print('Loss weight in 7 days');
-      } else {
-        print('not select');
-      }
+  void updateuserData() {
+    FirebaseFirestore.instance
+        .collection('caloriecounter')
+        .doc(widget.gUser.email)
+        .update({
+      'bmi': double.parse(bmi.toString()).floor(),
+      'bmr': double.parse(bmr.toString()).floor(),
     });
-  }
-
-  void weightLossIn7Days() {
-    temp = 7000 * 2;
-    defceintWegiht = temp / 7;
-    requreBmr = _bmr - defceintWegiht;
-  }
-
-  void weightLossIn15Days() {
-    temp = 7000 * 2;
-    defceintWegiht = temp / 15;
-    requreBmr = _bmr - defceintWegiht;
-  }
-
-  void weightLossIn30Days() {
-    temp = 7000 * 4;
-    defceintWegiht = temp / 30;
-    requreBmr = _bmr - defceintWegiht;
-  }
-
-  void weightGainIn7Days() {
-    temp = 7000 * 2;
-    defceintWegiht = temp / 7;
-    requreBmr = _bmr + defceintWegiht;
-  }
-
-  void weightGainIn15Days() {
-    temp = 7000 * 2;
-    defceintWegiht = temp / 15;
-    requreBmr = _bmr + defceintWegiht;
-  }
-
-  void weightGainIn30Days() {
-    temp = 7000 * 4;
-    defceintWegiht = temp / 30;
-    requreBmr = _bmr + defceintWegiht;
   }
 }

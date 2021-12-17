@@ -61,8 +61,10 @@ class _HomeState extends State<Home> {
                 child: Text('Edit photo'),
                 onTap: () {
                   setState(() {
-                    // Edit(_imageFileList![0].path);
-                    _cropImage();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Edit(_imageFileList![0])));
                   });
                 },
               ),

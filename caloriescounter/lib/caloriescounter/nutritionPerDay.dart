@@ -139,290 +139,288 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                   child: Container(
                       child: food['tcalories'] == 0
                           ? Container(
-                              alignment: Alignment.center,
-                              child: Row(
+                              child: Column(
                                 children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
+                                  Row(
                                     children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            height: 80,
+                                            width: 80,
+                                            child: Stack(
+                                              children: [
+                                                Image.asset(
+                                                    'assets/calories.png'),
+                                                Positioned(
+                                                  left: 46,
+                                                  bottom: 35,
+                                                  child: Text(
+                                                    '0',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                                // Positioned(
+                                                //   left: 8,
+                                                //   bottom: 35,
+                                                //   child: Text(
+                                                //     _setgoal.floor().toString(),
+                                                //     style:
+                                                //         TextStyle(fontSize: 10),
+                                                //   ),
+                                                // )
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Calores',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      ),
                                       SizedBox(
-                                        height: 10,
+                                        width: 10,
                                       ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                children: [
+                                                  Image.asset(
+                                                      'assets/carbs.png'),
+                                                  Positioned(
+                                                    left: 48,
+                                                    bottom: 30,
+                                                    child: Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Carbs',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        width: 10,
                                       ),
-                                      Text('Calories')
+                                      Column(
+                                        children: [
+                                          Container(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                children: [
+                                                  Image.asset('assets/fat.png'),
+                                                  Positioned(
+                                                    left: 45,
+                                                    bottom: 30,
+                                                    child: Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Fat',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                children: [
+                                                  Image.asset(
+                                                      'assets/protien.png'),
+                                                  Positioned(
+                                                    left: 55,
+                                                    bottom: 30,
+                                                    child: Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Protien',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Cabrs')
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Fats')
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Protine')
-                                    ],
-                                  )
+                                  // Container(
+                                  //   child: LinearProgressIndicator(
+                                  //     value: 10,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             )
                           : Container(
-                              alignment: Alignment.center,
-                              child: Row(
+                              child: Column(
                                 children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
+                                  Row(
                                     children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            height: 80,
+                                            width: 80,
+                                            child: Stack(
+                                              children: [
+                                                Image.asset(
+                                                    'assets/calories.png'),
+                                                Positioned(
+                                                  left: 46,
+                                                  bottom: 35,
+                                                  child: Text(
+                                                    '0',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                                // Positioned(
+                                                //   left: 8,
+                                                //   bottom: 35,
+                                                //   child: Text(
+                                                //     _setgoal.floor().toString(),
+                                                //     style:
+                                                //         TextStyle(fontSize: 10),
+                                                //   ),
+                                                // )
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Calores',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      ),
                                       SizedBox(
-                                        height: 10,
+                                        width: 10,
                                       ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data1),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                children: [
+                                                  Image.asset(
+                                                      'assets/carbs.png'),
+                                                  Positioned(
+                                                    left: 48,
+                                                    bottom: 30,
+                                                    child: Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Carbs',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        width: 10,
                                       ),
-                                      Text('Calories')
+                                      Column(
+                                        children: [
+                                          Container(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                children: [
+                                                  Image.asset('assets/fat.png'),
+                                                  Positioned(
+                                                    left: 45,
+                                                    bottom: 30,
+                                                    child: Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Fat',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Container(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                children: [
+                                                  Image.asset(
+                                                      'assets/protien.png'),
+                                                  Positioned(
+                                                    left: 55,
+                                                    bottom: 30,
+                                                    child: Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text('Protien',
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data1),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Calories')
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data1),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Cabrs')
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius:
-                                            MediaQuery.of(context).size.width *
-                                                0.08,
-                                        child: PieChart(
-                                          PieChartData(
-                                              startDegreeOffset: 3,
-                                              centerSpaceRadius: 0,
-                                              sectionsSpace: 0,
-
-                                              // borderData: FlBorderData(show: false),
-                                              sections: data1),
-                                          swapAnimationDuration: Duration(
-                                              milliseconds: 150), // Optional
-                                          swapAnimationCurve:
-                                              Curves.linear, // Optional
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text('Fats')
-                                    ],
-                                  )
                                 ],
                               ),
-                            )
-                      // : Container(
-                      //     // padding: EdgeInsets.all(10),
-                      //     // child: SfCircularChart(series: <CircularSeries>[
-                      //     //   // Render pie chart
-                      //     //   PieSeries<ChartData, String>(
-                      //     //     radius: '100%',
-                      //     //     dataSource: chartData,
-                      //     //     xValueMapper: (ChartData data, _) => data.x,
-                      //     //     yValueMapper: (ChartData data, _) => data.y,
-                      //     //   )
-                      //     // ])),
-                      //     ),
-                      ),
+                            )),
                 );
         },
       ),
