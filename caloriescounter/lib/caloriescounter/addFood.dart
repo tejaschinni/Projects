@@ -76,164 +76,84 @@ class _AddFoodState extends State<AddFood> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          margin: EdgeInsets.all(5),
-          child: Column(
+          child: Center(
+              child: Column(
             children: [
               Container(
                 child: Row(
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      child: Text('Recipe Name : '),
-                    ),
-                    Expanded(
-                        child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              nameController.text,
-                              style: TextStyle(fontSize: 18),
-                            ))),
                     SizedBox(
-                      height: 40,
-                      width: 60,
-                      child: SizedBox(
-                        height: 40,
-                        width: 20,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: gramsController,
-                          keyboardType: TextInputType.number,
-                          onChanged: (String val) {
-                            setState(() {
-                              __gram = int.parse(val);
-                            });
-                            validate();
-                            onGramchange();
-                          },
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
+                      width: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 80,
+                          child: Image.asset('assets/calories.png'),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Grams',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(fontSize: 12),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('Calores', style: TextStyle(fontSize: 10))
+                      ],
                     ),
                     SizedBox(
                       width: 10,
                     ),
+                    Column(
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 80,
+                          child: Image.asset('assets/carbs.png'),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('Carbs', style: TextStyle(fontSize: 10))
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 80,
+                          child: Image.asset('assets/fat.png'),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('Fat', style: TextStyle(fontSize: 10))
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 80,
+                          child: Image.asset('assets/protien.png'),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('Protien', style: TextStyle(fontSize: 10))
+                      ],
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                   ],
                 ),
               ),
-              Center(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      Column(
-                        children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.redAccent,
-                              radius: MediaQuery.of(context).size.width * 0.08,
-                              child: Text(
-                                caloriesController.text,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Text('Calories',
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      Column(
-                        children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.redAccent,
-                              radius: MediaQuery.of(context).size.width * 0.08,
-                              child: Text(
-                                carbonController.text,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Text('Carbs',
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      Column(
-                        children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.yellowAccent,
-                              radius: MediaQuery.of(context).size.width * 0.08,
-                              child: Text(
-                                fatsController.text,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black),
-                              )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Text('Fat',
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      Column(
-                        children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.redAccent[700],
-                              radius: MediaQuery.of(context).size.width * 0.08,
-                              child: Text(
-                                protiensController.text,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Text('Protiens',
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
-                  flex: 6,
+                  flex: 8,
                   child: Container(
                       child: RecipiesListSearchPage(
                           widget.gUser,
@@ -242,63 +162,14 @@ class _AddFoodState extends State<AddFood> {
                           widget.userRecipeList,
                           setRecipeValue,
                           _showMyDialog))),
-              Expanded(
-                  flex: 2,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        bottom: -10,
-                        child: Image.asset(
-                          'assets/image3.png',
-                          height: MediaQuery.of(context).size.height * 0.18,
-                          width: MediaQuery.of(context).size.width * 0.18,
-                          //scale: 0.1,
-                          fit: BoxFit.fill,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                      ),
-                      Positioned(
-                        left: 90,
-                        bottom: -10,
-                        child: Image.asset(
-                          'assets/image2.png',
-                          height: MediaQuery.of(context).size.height * 0.18,
-                          width: MediaQuery.of(context).size.width * 0.18,
-                          //scale: 0.1,
-                          fit: BoxFit.fill,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                      ),
-                      Positioned(
-                        left: 170,
-                        bottom: -25,
-                        child: Image.asset(
-                          'assets/image1.png',
-                          height: MediaQuery.of(context).size.height * 0.18,
-                          width: MediaQuery.of(context).size.width * 0.18,
-                          //scale: 0.1,
-                          fit: BoxFit.fill,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                      ),
-                      Positioned(
-                        left: 250,
-                        bottom: -15,
-                        child: Image.asset(
-                          'assets/image4.png',
-                          height: MediaQuery.of(context).size.height * 0.18,
-                          width: MediaQuery.of(context).size.width * 0.18,
-                          //scale: 0.1,
-                          fit: BoxFit.fill,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ],
-                  ))
+              SizedBox(
+                height: 10,
+              ),
             ],
-          ),
+          )),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepPurple[900],
           child: Icon(Icons.add),
           onPressed: () {
             setState(() {

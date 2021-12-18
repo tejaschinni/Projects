@@ -1,3 +1,5 @@
+import 'package:caloriescounter/caloriescounter/profilePage.dart';
+import 'package:caloriescounter/signInPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +59,85 @@ class _SetGoalState extends State<SetGoal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Set Goal'),
-      ),
       body: SafeArea(
           child: Center(
         child: Column(
           children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height * 0.08,
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    child: InkWell(
+                      child: Icon(
+                        Icons.arrow_back,
+                      ),
+                      onTap: () {
+                        setState(() {
+                          setState(() {
+                            Get.back();
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.09,
+                  ),
+                  Container(
+                    child: Text(
+                      'Set Goal',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                  ),
+                  Container(
+                    width: 20,
+                    padding: EdgeInsets.zero,
+                    child: PopupMenuButton<String>(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.settings),
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<String>>[
+                        const PopupMenuItem<String>(
+                          value: 'Profile',
+                          child: ListTile(
+                            leading: Icon(Icons.visibility),
+                            title: Text('Proflie'),
+                          ),
+                        ),
+                        const PopupMenuItem<String>(
+                          value: 'SignOut',
+                          child: ListTile(
+                            leading: Icon(Icons.person_add),
+                            title: Text('SignOut'),
+                          ),
+                        ),
+                      ],
+                      onSelected: (String s) {
+                        print(s);
+                        if (s == 'SignOut') {
+                          widget.signOut();
+                          Get.offAll(() => SignInPage());
+                        }
+                        if (s == 'Profile') {
+                          setState(() {
+                            Get.to(() =>
+                                ProfilePage(widget.gUser, widget.signOut));
+                          });
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             ListTile(
               title: Text('Goal'),
               trailing: DropdownButton(
@@ -81,7 +155,7 @@ class _SetGoalState extends State<SetGoal> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             ListTile(
               title: Text('Exercise'),
@@ -100,39 +174,66 @@ class _SetGoalState extends State<SetGoal> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
-            Text('Weight'),
             Container(
-              child: NumberPicker(
-                value: _weightValue,
-                minValue: 1,
-                maxValue: 100,
-                onChanged: (value) => setState(() => _weightValue = value),
+              padding: EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.08,
+                  ),
+                  Column(
+                    children: [
+                      Text('Weight'),
+                      Container(
+                        child: NumberPicker(
+                          value: _weightValue,
+                          minValue: 1,
+                          maxValue: 100,
+                          onChanged: (value) => setState(() {
+                            _weightValue = value;
+                            setgoal1();
+                          }),
+                        ),
+                      ),
+                      Text('Current value: $_weightValue'),
+                    ],
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.16,
+                  ),
+                  Column(
+                    children: [
+                      Text('Days'),
+                      Container(
+                        child: NumberPicker(
+                          value: _daysValue,
+                          minValue: 1,
+                          maxValue: 100,
+                          onChanged: (value) => setState(() {
+                            _daysValue = value;
+                            setgoal1();
+                          }),
+                        ),
+                      ),
+                      Text('Current value: $_daysValue'),
+                    ],
+                  )
+                ],
               ),
             ),
-            Text('Current value: $_weightValue'),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
-            Text('Days'),
             Container(
-              child: NumberPicker(
-                value: _daysValue,
-                minValue: 1,
-                maxValue: 100,
-                onChanged: (value) => setState(() => _daysValue = value),
-              ),
+              child: Text("Goal to Complete : " + requreBmr.floor().toString()),
             ),
-            Text('Current value: ' + _daysValue.toString()),
-            SizedBox(
-              height: 10,
-            ),
-            Text('Set Goal: ' + requreBmr.floor().toString()),
           ],
         ),
       )),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple[900],
         child: Icon(Icons.add),
         onPressed: () {
           //setgoal();

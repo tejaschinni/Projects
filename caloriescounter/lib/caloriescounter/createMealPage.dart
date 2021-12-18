@@ -535,10 +535,29 @@ class _CreateMealPageState extends State<CreateMealPage> {
     );
   }
 
+  void _runFilter(String enteredKeyword) {
+    List<Food> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = widget.foodList;
+    } else {
+      results = widget.foodList
+          .where((user) =>
+              user.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      findFood = results;
+    });
+  }
+
   Future<void> _addMeal() async {
     return showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext contex) {
           return AlertDialog(
             title: Column(
               children: [
@@ -566,184 +585,149 @@ class _CreateMealPageState extends State<CreateMealPage> {
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(29)))),
                 ),
-                Row(
-                  children: [
-                    Column(
+                Center(
+                  child: Container(
+                    child: Row(
                       children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: MediaQuery.of(context).size.width * 0.04,
-                            child: PieChart(
-                              PieChartData(
-                                  startDegreeOffset: 3,
-                                  centerSpaceRadius: 0,
-                                  sectionsSpace: 0,
-                                  // borderData: FlBorderData(show: false),
-                                  sections: data),
-                              swapAnimationDuration:
-                                  Duration(milliseconds: 150), // Optional
-                              swapAnimationCurve: Curves.linear, // Optional
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 35,
-                        ),
-                        Text(
-                          'Calories',
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 25,
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: MediaQuery.of(context).size.width * 0.06,
-                            child: PieChart(
-                              PieChartData(
-                                  startDegreeOffset: 3,
-                                  centerSpaceRadius: 0,
-                                  sectionsSpace: 0,
-                                  // borderData: FlBorderData(show: false),
-                                  sections: data),
-                              swapAnimationDuration:
-                                  Duration(milliseconds: 150), // Optional
-                              swapAnimationCurve: Curves.linear, // Optional
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Calories',
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: MediaQuery.of(context).size.width * 0.06,
-                            child: PieChart(
-                              PieChartData(
-                                  startDegreeOffset: 3,
-                                  centerSpaceRadius: 0,
-                                  sectionsSpace: 0,
-                                  // borderData: FlBorderData(show: false),
-                                  sections: data),
-                              swapAnimationDuration:
-                                  Duration(milliseconds: 150), // Optional
-                              swapAnimationCurve: Curves.linear, // Optional
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Calories',
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: MediaQuery.of(context).size.width * 0.06,
-                            child: PieChart(
-                              PieChartData(
-                                  startDegreeOffset: 3,
-                                  centerSpaceRadius: 0,
-                                  sectionsSpace: 0,
-                                  // borderData: FlBorderData(show: false),
-                                  sections: data),
-                              swapAnimationDuration:
-                                  Duration(milliseconds: 150), // Optional
-                              swapAnimationCurve: Curves.linear, // Optional
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Calories',
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
-            content: Container(
-              width: 400,
-              height: 400,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: temp.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Row(
+                        Column(
                           children: [
                             Container(
+                              height: 70,
                               width: 70,
-                              child: Text(
-                                temp[index].name,
-                                style: TextStyle(fontSize: 13),
+                              child: Stack(
+                                children: [
+                                  Image.asset('assets/calories.png'),
+                                  Positioned(
+                                    left: 50,
+                                    bottom: 30,
+                                    child: Text(
+                                      caloriesController.text,
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.02,
+                              height: 10,
                             ),
-                            Text(temp[index].gram + ' g',
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.grey)),
+                            Text('Calores', style: TextStyle(fontSize: 10))
+                          ],
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 70,
+                              width: 70,
+                              child: Image.asset('assets/carbs.png'),
+                            ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.02,
+                              height: 10,
                             ),
-                            Text(
-                              temp[index].calories + ' c \t',
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.pink[300]),
+                            Text('Carbs', style: TextStyle(fontSize: 10))
+                          ],
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 70,
+                              width: 70,
+                              child: Image.asset(
+                                'assets/fat.png',
+                              ),
                             ),
-                            Text(temp[index].carbon + ' c \t',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.deepPurpleAccent[400])),
-                            Text(temp[index].fats + ' f \t',
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.orange[400])),
-                            Text(temp[index].protein + ' p \t',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.redAccent[200])),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text('Fat', style: TextStyle(fontSize: 10))
+                          ],
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 70,
+                              width: 70,
+                              child: Image.asset('assets/protien.png'),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text('Protien', style: TextStyle(fontSize: 10))
                           ],
                         ),
                       ],
                     ),
-                  );
-                },
+                  ),
+                )
+              ],
+            ),
+            content: Container(
+              height: 300,
+              width: 300,
+              child: Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: temp.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 70,
+                                  child: Text(
+                                    temp[index].name,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.02,
+                                ),
+                                Text(temp[index].gram + 'g',
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.grey)),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.02,
+                                ),
+                                Text(
+                                  temp[index].calories + ' c \t',
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.pink[300]),
+                                ),
+                                Text(temp[index].carbon + ' c \t',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.deepPurpleAccent[400])),
+                                Text(temp[index].fats + ' f \t',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.orange[400])),
+                                Text(temp[index].protein + ' p \t',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.redAccent[200])),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             actions: [
@@ -763,6 +747,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                     ),
                   ),
                   Positioned(
+                    bottom: -10,
                     left: 40,
                     child: Container(
                       alignment: Alignment.bottomLeft,
@@ -834,6 +819,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                       child: Text('Add'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.indigo.shade700,
+                        //minimumSize: Size(70, 50),
                         //onPrimary: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32.0),
@@ -846,25 +832,6 @@ class _CreateMealPageState extends State<CreateMealPage> {
             ],
           );
         });
-  }
-
-  void _runFilter(String enteredKeyword) {
-    List<Food> results = [];
-    if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
-      results = widget.foodList;
-    } else {
-      results = widget.foodList
-          .where((user) =>
-              user.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-      // we use the toLowerCase() method to make it case-insensitive
-    }
-
-    // Refresh the UI
-    setState(() {
-      findFood = results;
-    });
   }
 
   void setRecipeValue(

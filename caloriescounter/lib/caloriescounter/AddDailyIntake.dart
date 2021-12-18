@@ -266,6 +266,7 @@ class _AddDailyInTakeState extends State<AddDailyInTake> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple[900],
         child: Icon(Icons.add),
         onPressed: () {
           print(" ----------- Document Refernce " +

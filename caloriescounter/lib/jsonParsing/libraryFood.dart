@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:caloriescounter/caloriescounter/dashBoardPage.dart';
 import 'package:caloriescounter/data/food.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,35 @@ class _LibraryFoddState extends State<LibraryFodd> {
     }
   }
 
+  void validate() {
+    if (gramsController.text.length > 0) {
+      setState(() {
+        validator = true;
+        addFood();
+        _read();
+        nameController.text = "";
+        protiensController.text = "";
+        caloriesController.text = "";
+        gramsController.text = "";
+        fatsController.text = "";
+        carbonController.text = "";
+        name = "";
+        fats = '';
+        grams = '';
+        protiens = '';
+        calories = "";
+        carbon = "";
+        Get.offAll(() => DashBoardPage(widget.gUser, widget.signOut));
+        print(' ---------------------------- Validation True ');
+      });
+    } else {
+      setState(() {
+        validator = false;
+        print(' ---------------------------- Validation false ');
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -75,335 +105,176 @@ class _LibraryFoddState extends State<LibraryFodd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.all(5),
-          child: Column(
+        body: Container(
+            child: Column(
+      children: [
+        Container(
+          child: Row(
             children: [
               SizedBox(
-                height: 10,
+                width: MediaQuery.of(context).size.width * 0.05,
               ),
-              TextField(
-                onChanged: (value) => _runFilter(value),
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    labelText: 'Search',
-                    suffixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
+              Column(
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    child: Stack(
+                      children: [
+                        Image.asset('assets/calories.png'),
+                        Positioned(
+                          left: 50,
+                          bottom: 30,
+                          child: Text(
+                            caloriesController.text,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Calores', style: TextStyle(fontSize: 10))
+                ],
               ),
               SizedBox(
-                height: 5,
+                width: 10,
               ),
-              Expanded(
-                flex: 4,
-                child: ListView.builder(
-                    itemCount: foundfood.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: InkWell(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    foundfood[index].name.toString(),
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        foundfood[index].gram.toString() +
-                                            'gram',
-                                        style: TextStyle(fontSize: 10),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .3,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        ' ',
-                                        style: TextStyle(
-                                            color: Colors.blue.shade900),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'C  :  ' +
-                                                foundfood[index]
-                                                    .calories
-                                                    .toString() +
-                                                'g',
-                                            style: TextStyle(
-                                                color: Colors.blue.shade900,
-                                                fontSize: 10),
-                                          ),
-                                          Text(
-                                            'C  :  ' +
-                                                foundfood[index]
-                                                    .carbon
-                                                    .toString() +
-                                                'g',
-                                            style: TextStyle(fontSize: 10),
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text(
-                                            'P  :  ' +
-                                                foundfood[index]
-                                                    .carbon
-                                                    .toString() +
-                                                'g',
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.blueAccent),
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text(
-                                            'F : ' +
-                                                foundfood[index]
-                                                    .fats
-                                                    .toString() +
-                                                'g',
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.orangeAccent),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 100,
-                              ),
-                              Divider(),
-                            ],
-                          ),
-                          onTap: () {
-                            setState(() {
-                              setRecipeValue(
-                                  foundfood[index].name,
-                                  int.parse(foundfood[index].calories),
-                                  int.parse(foundfood[index].gram),
-                                  int.parse(foundfood[index].carbon),
-                                  int.parse(foundfood[index].protein),
-                                  int.parse(foundfood[index].fats));
-                            });
-                          },
-                        ),
-                      );
-                    }),
+              Column(
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    child: Image.asset('assets/carbs.png'),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Carbs', style: TextStyle(fontSize: 10))
+                ],
               ),
-              Expanded(
-                  flex: 4,
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Text('Recipe Name : '),
-                                ),
-                                Expanded(
-                                    child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text(
-                                          nameController.text,
-                                          style: TextStyle(fontSize: 18),
-                                        ))),
-                                SizedBox(
-                                  height: 40,
-                                  width: 60,
-                                  child: SizedBox(
-                                    height: 40,
-                                    width: 20,
-                                    child: TextField(
-                                      textAlign: TextAlign.center,
-                                      controller: gramsController,
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (String val) {
-                                        setState(() {
-                                          __gram = int.parse(val);
-                                        });
-                                        validate();
-                                        onGramchange();
-                                      },
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.all(10),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10))),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  'Grams',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                children: [
-                                  Column(
-                                    children: [
-                                      CircleAvatar(
-                                          backgroundColor: Colors.redAccent,
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.08,
-                                          child: Text(
-                                            caloriesController.text,
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white),
-                                          )),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        child: Text('Calories',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black)),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
-                                    children: [
-                                      CircleAvatar(
-                                          backgroundColor: Colors.redAccent,
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.08,
-                                          child: Text(
-                                            carbonController.text,
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white),
-                                          )),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        child: Text('Carbs',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black)),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
-                                    children: [
-                                      CircleAvatar(
-                                          backgroundColor: Colors.yellowAccent,
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.08,
-                                          child: Text(
-                                            fatsController.text,
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.black),
-                                          )),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        child: Text('Fat',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black)),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
-                                    children: [
-                                      CircleAvatar(
-                                          backgroundColor:
-                                              Colors.redAccent[700],
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.08,
-                                          child: Text(
-                                            protiensController.text,
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white),
-                                          )),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        child: Text('Protiens',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black)),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    child: Image.asset(
+                      'assets/fat.png',
                     ),
-                  )),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Fat', style: TextStyle(fontSize: 10))
+                ],
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    child: Image.asset('assets/protien.png'),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Protien', style: TextStyle(fontSize: 10))
+                ],
+              ),
+              SizedBox(
+                width: 20,
+              ),
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            addFood();
-            Get.back();
-          });
-        },
-      ),
-    );
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+          padding: EdgeInsets.all(20),
+          child: TextField(
+            onChanged: (value) => _runFilter(value),
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(5),
+                labelText: 'Search',
+                suffixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10))),
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Expanded(
+            child: ListView.builder(
+                itemCount: foundfood.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.all(14),
+                    child: InkWell(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 70,
+                                child: Text(
+                                  foundfood[index].name,
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.1,
+                              ),
+                              Text(foundfood[index].gram + ' g',
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.grey)),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.1,
+                              ),
+                              Text(
+                                foundfood[index].calories + ' c \t\t',
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.pink[300]),
+                              ),
+                              Text(foundfood[index].carbon + ' c \t\t',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.deepPurpleAccent[400])),
+                              Text(foundfood[index].fats + ' f \t\t',
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.orange[400])),
+                              Text(foundfood[index].protein + ' p \t',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.redAccent[200])),
+                            ],
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        setRecipeValue(
+                            foundfood[index].name,
+                            int.parse(foundfood[index].calories),
+                            int.parse(foundfood[index].gram),
+                            int.parse(foundfood[index].carbon),
+                            int.parse(foundfood[index].protein),
+                            int.parse(foundfood[index].fats));
+                        _showMyDialog();
+                      },
+                    ),
+                  );
+                }))
+      ],
+    )));
   }
 
   void _runFilter(String enteredKeyword) {
@@ -423,26 +294,6 @@ class _LibraryFoddState extends State<LibraryFodd> {
     setState(() {
       foundfood = results;
     });
-  }
-
-  void validate() {
-    if (nameController.text.length > 2 &&
-        gramsController.text.length > 0 &&
-        protiensController.text.length > 0 &&
-        carbonController.text.length > 0 &&
-        caloriesController.text.length > 0 &&
-        fatsController.text.length > 0) {
-      setState(() {
-        validator = true;
-
-        print(' ---------------------------- Validation True ');
-      });
-    } else {
-      setState(() {
-        validator = false;
-        print(' ---------------------------- Validation false ');
-      });
-    }
   }
 
   void setRecipeValue(
@@ -554,5 +405,59 @@ class _LibraryFoddState extends State<LibraryFodd> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            child: Row(
+              children: [
+                Expanded(
+                    child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          nameController.text,
+                          style: TextStyle(fontSize: 18),
+                        ))),
+                SizedBox(
+                  height: 40,
+                  width: 80,
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: gramsController,
+                    keyboardType: TextInputType.number,
+                    onChanged: (String val) {
+                      setState(() {
+                        __gram = int.parse(val);
+                      });
+
+                      onGramchange();
+                    },
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                setState(() {
+                  validate();
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

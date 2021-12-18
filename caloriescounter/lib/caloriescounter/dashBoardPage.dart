@@ -164,7 +164,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         }
                                         if (s == 'Profile') {
                                           setState(() {
-                                            Get.to(() => ProfilePage(
+                                            Get.to(() => UserRegisterPage(
                                                 widget.gUser, widget.signOut));
                                           });
                                         }

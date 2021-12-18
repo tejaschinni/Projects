@@ -2,6 +2,7 @@ import 'package:caloriescounter/signInPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -77,6 +78,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple[900],
         onPressed: () {
           setState(() {
             calculate();
@@ -89,435 +91,302 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
               gender);
         },
       ),
-      appBar: AppBar(
-        title: Text('User Profile'),
-        actions: [
-          Center(
-            child: InkWell(
-              child: Icon(Icons.person),
-              onTap: () {
-                widget.signOut();
-                Get.off(() => SignInPage());
-              },
-            ),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Container(
           child: Column(
             children: [
-              // Container(
-              //   child: ListTile(
-              //     leading: const Icon(Icons.person),
-              //     title: new TextField(
-              //       decoration: InputDecoration(
-              //         border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(10)),
-              //         hintText: "Name",
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  controller: userNameController,
-                  onChanged: (String val) {
-                    setState(() {
-                      name = val;
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'UserName',
-                      prefixIcon: Icon(
-                        Icons.person_outline,
-                        color: Colors.black,
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                child: InkWell(
+                                  child: Icon(Icons.arrow_back),
+                                  onTap: () {
+                                    setState(() {
+                                      Get.back();
+                                    });
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.05,
+                              ),
+                              Container(
+                                child: Text(
+                                  'User Register ',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.44,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                child: FaIcon(FontAwesomeIcons.home),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.person_outline,
+                              color: Colors.black,
+                            ),
+                            title: TextField(
+                              controller: userNameController,
+                              onChanged: (String val) {
+                                setState(() {
+                                  name = val;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  hintText: 'UserName',
+                                  // prefixIcon: Icon(
+                                  //   Icons.person_outline,
+                                  //   color: Colors.black,
+                                  // ),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(29))),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.person_outline,
+                              color: Colors.black,
+                            ),
+                            title: Text(gender),
+                            trailing: DropdownButton(
+                              value: gender,
+                              icon: Icon(Icons.keyboard_arrow_down),
+                              items: item.map((String gender) {
+                                return DropdownMenuItem(
+                                    value: gender, child: Text(gender));
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  gender = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.calendar_today_outlined,
+                              color: Colors.black,
+                            ),
+                            title: Text(
+                              dateTime.day.toString() +
+                                  '/' +
+                                  dateTime.month.toString() +
+                                  '/' +
+                                  dateTime.year.toString(),
+                            ),
+                            trailing: Container(
+                              child: InkWell(
+                                child: Icon(Icons.calendar_view_month),
+                                onTap: () {
+                                  dateBOD();
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.monitor_weight_outlined,
+                              color: Colors.black,
+                            ),
+                            title: TextField(
+                              controller: weigthController,
+                              onChanged: (String val) {
+                                setState(() {
+                                  weigth = int.parse(val);
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  suffixIcon: Container(
+                                    padding: EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                        color: Colors.orangeAccent,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Text("KG"),
+                                  ),
+                                  hintText: 'Your Wieght',
+                                  // prefixIcon: Icon(
+                                  //   Icons.person_outline,
+                                  //   color: Colors.black,
+                                  // ),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(29))),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.height_outlined,
+                              color: Colors.black,
+                            ),
+                            title: TextField(
+                              controller: heightController,
+                              onChanged: (String val) {
+                                setState(() {
+                                  height = double.parse(val);
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  suffixIcon: Container(
+                                    padding: EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                        color: Colors.orangeAccent,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Text("CM"),
+                                  ),
+                                  hintText: 'Your Height',
+                                  // prefixIcon: Icon(
+                                  //   Icons.person_outline,
+                                  //   color: Colors.black,
+                                  // ),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(29))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+              Expanded(
+                  child: Container(
+                child: Stack(
+                  children: [
+                    Positioned(child: Container()),
+                    Positioned(
+                      bottom: -10,
+                      left: 20,
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Image.asset(
+                          'assets/image3.png',
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          //scale: 0.1,
+                          fit: BoxFit.fill,
+                          alignment: Alignment.bottomLeft,
+                        ),
                       ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
+                    ),
+                    Positioned(
+                      bottom: -10,
+                      left: 90,
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Image.asset(
+                          'assets/image2.png',
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          //scale: 0.1,
+                          fit: BoxFit.fill,
+                          alignment: Alignment.bottomLeft,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -10,
+                      left: 150,
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Image.asset(
+                          'assets/image1.png',
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          //scale: 0.1,
+                          fit: BoxFit.fill,
+                          alignment: Alignment.bottomLeft,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -10,
+                      left: 220,
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Image.asset(
+                          'assets/image4.png',
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          //scale: 0.1,
+                          fit: BoxFit.fill,
+                          alignment: Alignment.bottomLeft,
+                        ),
+                      ),
+                    ),
+                    SizedBox(),
+                    // Positioned(
+                    //   bottom: 20,
+                    //   left: 230,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         Get.back();
+                    //       });
+                    //     },
+                    //     child: Text('Update'),
+                    //     style: ElevatedButton.styleFrom(
+                    //       primary: Colors.indigo.shade700,
+                    //       //onPrimary: Colors.white,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(32.0),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   bottom: 20,
+                    //   left: 320,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         // Get.to(
+                    //         //     () => SetGoal(widget.gUser, widget.signOut));
+                    //       });
+                    //     },
+                    //     child: Text('SetGoal'),
+                    //     style: ElevatedButton.styleFrom(
+                    //       primary: Colors.indigo.shade700,
+                    //       //minimumSize: Size(70, 50),
+                    //       //onPrimary: Colors.white,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(32.0),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Full Name',
-                      prefixIcon: Icon(
-                        Icons.person_outline,
-                        color: Colors.black,
-                      ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Email',
-                      prefixIcon: Icon(
-                        Icons.email_outlined,
-                        color: Colors.black,
-                      ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      hintText: 'Password',
-                      prefixIcon: Icon(
-                        Icons.lock_outline_rounded,
-                        color: Colors.black,
-                      ),
-                      suffixIcon: Icon(Icons.visibility_off_rounded),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Chose Gender',
-                      suffixIcon: DropdownButton(
-                        value: gender,
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        items: item.map((String items) {
-                          return DropdownMenuItem(
-                              value: items, child: Text(items));
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            gender = value.toString();
-                          });
-                        },
-                      ),
-                      prefixIcon: Icon(
-                        Icons.person_add_alt_outlined,
-                        color: Colors.black,
-                      ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: dateTime.day.toString() +
-                          '/' +
-                          dateTime.month.toString() +
-                          '/' +
-                          dateTime.year.toString(),
-                      prefixIcon: Icon(
-                        Icons.calendar_today_rounded,
-                        color: Colors.black,
-                      ),
-                      suffixIcon: InkWell(
-                        child: Icon(Icons.calendar_view_month),
-                        onTap: () {
-                          dateBOD();
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  controller: weigthController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (String val) {
-                    setState(() {
-                      weigth = int.parse(val);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'weight',
-                      prefixIcon: Icon(
-                        Icons.monitor_weight_sharp,
-                        color: Colors.black,
-                      ),
-                      suffixIcon: Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            color: Colors.greenAccent,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text("KG"),
-                      ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              Container(
-                //padding: EdgeInsets.all(20),
-                child: TextField(
-                  controller: heightController,
-                  onChanged: (String val) {
-                    setState(() {
-                      height = double.parse(val);
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Height',
-                      prefixIcon: Icon(
-                        Icons.person_outline,
-                        color: Colors.black,
-                      ),
-                      suffixIcon: Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            color: Colors.orangeAccent,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text("CM"),
-                      ),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(29))),
-                ),
-              ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('User Name'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.only(top: 6, right: 6),
-              //         child: TextField(
-              //           controller: userNameController,
-              //           onChanged: (String val) {
-              //             setState(() {
-              //               name = val;
-              //             });
-              //           },
-              //           decoration: InputDecoration(
-              //               border: OutlineInputBorder(
-              //                   borderRadius: BorderRadius.circular(10))),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-              // Container(
-              //   //padding: EdgeInsets.all(20),
-              //   child: TextField(
-              //     decoration: InputDecoration(
-              //         hintText: 'Full Name',
-              //         prefixIcon: Icon(
-              //           Icons.person_outline,
-              //           color: Colors.black,
-              //         ),
-              //         border: OutlineInputBorder(
-              //             borderSide: BorderSide.none,
-              //             borderRadius: BorderRadius.circular(29))),
-              //   ),
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('Gender'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: DropdownButton(
-              //         value: gender,
-              //         icon: Icon(Icons.keyboard_arrow_down),
-              //         items: item.map((String items) {
-              //           return DropdownMenuItem(
-              //               value: items, child: Text(items));
-              //         }).toList(),
-              //         onChanged: (value) {
-              //           setState(() {
-              //             gender = value.toString();
-              //           });
-              //         },
-              //       ),
-              //     )
-              //   ],
-              // ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('DOB'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.only(top: 8, right: 10),
-              //         child: DateTimePicker(
-              //           initialValue: '',
-              //           firstDate: DateTime(2000),
-              //           lastDate: DateTime(2100),
-              //           dateLabelText: 'Date',
-              //           onChanged: (val) {
-              //             dateTime = DateTime.parse(val);
-              //           },
-              //           validator: (val) {
-              //             print(val);
-              //             return null;
-              //           },
-              //           onSaved: (val) => print(val),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('Height'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.only(top: 8, right: 10),
-              //         child: TextField(
-              //           controller: heightController,
-              //           onChanged: (String val) {
-              //             setState(() {
-              //               height = double.parse(val);
-              //             });
-              //           },
-              //           decoration: InputDecoration(
-              //               border: OutlineInputBorder(
-              //                   borderRadius: BorderRadius.circular(10))),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('weight'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.only(top: 8, right: 10),
-              //         child: TextField(
-              //           controller: weigthController,
-              //           keyboardType: TextInputType.number,
-              //           onChanged: (String val) {
-              //             setState(() {
-              //               weigth = int.parse(val);
-              //             });
-              //           },
-              //           decoration: InputDecoration(
-              //               border: OutlineInputBorder(
-              //                   borderRadius: BorderRadius.circular(10))),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('Height'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         child: Text('Goal'),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         height: 50,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(),
-              //     ),
-              //   ],
-              // ),
+              ))
             ],
           ),
         ),
