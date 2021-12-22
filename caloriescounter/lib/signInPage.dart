@@ -1,6 +1,8 @@
 import 'package:caloriescounter/caloriescounter/dashBoardPage.dart';
 import 'package:caloriescounter/caloriescounter/homePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -20,8 +22,11 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   GoogleSignInAccount? _currentUser;
   String _contactText = '';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   String documentPathOwner = '', email = '';
+  User? user;
 
   @override
   void initState() {
@@ -34,6 +39,9 @@ class _SignInPageState extends State<SignInPage> {
 
       if (_currentUser != null) {}
     });
+    _auth.userChanges().listen(
+          (event) => setState(() => user = event),
+        );
     _googleSignIn.signInSilently();
   }
 
@@ -45,7 +53,17 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  Future<void> _handleSignOut() => _googleSignIn.disconnect();
+  Future<void> _handleSignInWithFireBase() async {
+     final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+
+        
+  }
+
+  Future<void> _handleSignOut() async {
+    await _auth.signOut();
+    _googleSignIn.disconnect();
+  }
 
   Widget _buildBody() {
     GoogleSignInAccount? user = _currentUser;
@@ -254,6 +272,8 @@ class _SignInPageState extends State<SignInPage> {
     ChartData('B', 50, Color.fromRGBO(203, 141, 238, 1), "150")
   ];
 }
+
+
 
 class ChartData {
   ChartData(this.x, this.y, this.color, this.size);
