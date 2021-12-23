@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,6 +12,8 @@ class ViewPage extends StatefulWidget {
 
 class _ViewPageState extends State<ViewPage> {
   String stringResponse = '';
+  Map? map;
+  Map? data;
   @override
   void initState() {
     // TODO: implement initState
@@ -22,7 +26,8 @@ class _ViewPageState extends State<ViewPage> {
     response = await http.get(Uri.parse('https://hoblist.com/api/movieList'));
     if (response.statusCode == 200) {
       setState(() {
-        stringResponse = response.body;
+        // stringResponse = response.body;
+        map = jsonDecode(response.body);
       });
     }
   }
@@ -30,58 +35,88 @@ class _ViewPageState extends State<ViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Movies List'),
-      ),
-      drawer: SafeArea(
-        child: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              Container(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  'Company Info',
-                  style: TextStyle(fontSize: 20),
-                ),
-                decoration: BoxDecoration(color: Colors.blueAccent),
-              ),
-              ListTile(
-                leading: Text('Company name'),
-                title: Text('Geeksynergy Technologies Pvt Ltd'),
-              ),
-              ListTile(
-                leading: Text('Address'),
-                title: Text('Sanjayanagar, Bengaluru-56'),
-              ),
-              ListTile(
-                leading: Icon(Icons.phone),
-                title: Text('XXXXXXXX09'),
-              ),
-              ListTile(
-                leading: Icon(Icons.email),
-                title: Text('XXXXXX@gmail.com'),
-              ),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Movies List'),
         ),
-      ),
-      body: Container(
-        child: Row(
-          children: [
-            Column(
+        drawer: SafeArea(
+          child: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
               children: [
-                Icon(Icons.arrow_drop_up),
-                Text('1'),
-                Icon(Icons.arrow_drop_down),
-                Row(
-                  children: [Text('data')],
-                )
+                Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    'Company Info',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  decoration: BoxDecoration(color: Colors.blueAccent),
+                ),
+                ListTile(
+                  leading: Text('Company name'),
+                  title: Text('Geeksynergy Technologies Pvt Ltd'),
+                ),
+                ListTile(
+                  leading: Text('Address'),
+                  title: Text('Sanjayanagar, Bengaluru-56'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text('XXXXXXXX09'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.email),
+                  title: Text('XXXXXX@gmail.com'),
+                ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+        body: Container(
+            child: map == null
+                ? Container(
+                    child: Center(child: Text('No Data')),
+                  )
+                : Container(
+                    child: ListView.builder(itemBuilder: (context, index) {
+                      return Card(
+                        child: Row(
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Icon(Icons.arrow_drop_up),
+                                      Text('1'),
+                                      Icon(Icons.arrow_drop_down),
+                                      Text('Voites'),
+                                    ],
+                                  ),
+                                )),
+                            Expanded(
+                                child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                      height: 50,
+                                      width: 50,
+                                      child: Image.network(
+                                          'https://www.hhcenter.org/wp-content/uploads/2017/02/person-placeholder.jpg'))
+                                ],
+                              ),
+                            )),
+                            Expanded(
+                                child: Container(
+                              child: Column(
+                                children: [
+                                  Text('Movie Name'),
+                                ],
+                              ),
+                            ))
+                          ],
+                        ),
+                      );
+                    }),
+                  )));
   }
 }

@@ -162,4 +162,22 @@ class _SignUpPageState extends State<SignUpPage> {
       print('object');
     }
   }
+
+  void aleartbox() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("Alert Dialog Box"),
+        content: Text("You have raised a Alert Dialog Box"),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("okay"),
+          ),
+        ],
+      ),
+    );
+  }
 }
