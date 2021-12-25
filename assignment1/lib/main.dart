@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:assignment1/data/userData.dart';
+import 'package:assignment1/flutterBlueDemo.dart';
+import 'package:assignment1/jjsonDemo.dart';
 import 'package:assignment1/signUpPage.dart';
 import 'package:assignment1/viewPage.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SignUpPage(),
+      home: FlutterBlueDemo(),
     );
   }
 }
