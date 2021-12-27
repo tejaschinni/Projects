@@ -291,7 +291,10 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                                         children: [
                                           Container(
                                             height: 80,
-                                            width: 80,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.2,
                                             child: Stack(
                                               children: [
                                                 Image.asset(
@@ -331,20 +334,14 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                                         children: [
                                           Container(
                                               height: 80,
-                                              width: 80,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
                                               child: Stack(
                                                 children: [
                                                   Image.asset(
                                                       'assets/carbs.png'),
-                                                  Positioned(
-                                                    left: 48,
-                                                    bottom: 30,
-                                                    child: Text(
-                                                      '0',
-                                                      style: TextStyle(
-                                                          fontSize: 10),
-                                                    ),
-                                                  ),
                                                 ],
                                               )),
                                           SizedBox(
@@ -361,19 +358,13 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                                         children: [
                                           Container(
                                               height: 80,
-                                              width: 80,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
                                               child: Stack(
                                                 children: [
                                                   Image.asset('assets/fat.png'),
-                                                  Positioned(
-                                                    left: 45,
-                                                    bottom: 30,
-                                                    child: Text(
-                                                      '0',
-                                                      style: TextStyle(
-                                                          fontSize: 10),
-                                                    ),
-                                                  )
                                                 ],
                                               )),
                                           SizedBox(
@@ -390,20 +381,14 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                                         children: [
                                           Container(
                                               height: 80,
-                                              width: 80,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
                                               child: Stack(
                                                 children: [
                                                   Image.asset(
                                                       'assets/protien.png'),
-                                                  Positioned(
-                                                    left: 55,
-                                                    bottom: 30,
-                                                    child: Text(
-                                                      '0',
-                                                      style: TextStyle(
-                                                          fontSize: 10),
-                                                    ),
-                                                  )
                                                 ],
                                               )),
                                           SizedBox(

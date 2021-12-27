@@ -1,6 +1,6 @@
+import 'package:caloriescounter/caloriescounter/dashBoardPage.dart';
 import 'package:caloriescounter/signInPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -68,7 +68,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
 
   void validate() {
     if (userNameController.text.length > 2) {
-      print('----------------true');
+      userDetail();
     } else {
       print('----------------false');
     }
@@ -80,15 +80,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple[900],
         onPressed: () {
-          setState(() {
-            calculate();
-          });
-          userDetail();
-
-          print("------------date " +
-              dateTime.toString() +
-              '-------------' +
-              gender);
+          setState(() {});
         },
       ),
       body: SafeArea(
@@ -469,17 +461,25 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
   }
 
   Future<void> userDetail() async {
-    collection.doc(widget.gUser.email).set({
-      'name': name,
-      'height': height,
-      'weigth': weigth,
-      'joindate': DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day),
-      'DOB': dateTime,
-      'bmr': double.parse(bmr).floor(),
-      'setgoal': double.parse(bmr).floor(),
-      'bmi': double.parse(bmi).floor(),
-      'gender': gender
-    });
+    try {
+      collection.doc(widget.gUser.email).set({
+        'name': name,
+        'height': height,
+        'weigth': weigth,
+        'joindate': DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day),
+        'DOB': dateTime,
+        'bmr': double.parse(bmr).floor(),
+        'setgoal': double.parse(bmr).floor(),
+        'bmi': double.parse(bmi).floor(),
+        'gender': gender
+      });
+      setState(() {
+        calculate();
+      });
+      Get.to(() => DashBoardPage(widget.gUser, widget.signOut));
+    } catch (e) {
+      print('Not added');
+    }
   }
 }

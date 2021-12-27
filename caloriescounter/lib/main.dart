@@ -12,7 +12,7 @@ bool USE_FIRESTORE_EMULATOR = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Firebase.initializeApp(options: DefaultFirebaseConfig.platformOptions);
+ 
   await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   if (USE_FIRESTORE_EMULATOR) {
     FirebaseFirestore.instance.settings = const Settings(

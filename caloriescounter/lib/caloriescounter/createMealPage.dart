@@ -193,19 +193,12 @@ class _CreateMealPageState extends State<CreateMealPage> {
                           Column(
                             children: [
                               Container(
-                                height: 80,
-                                width: 80,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.17,
+                                width: MediaQuery.of(context).size.width * 0.17,
                                 child: Stack(
                                   children: [
                                     Image.asset('assets/calories.png'),
-                                    Positioned(
-                                      left: 60,
-                                      bottom: 35,
-                                      child: Text(
-                                        tcal.toString(),
-                                        style: TextStyle(fontSize: 10),
-                                      ),
-                                    )
                                   ],
                                 ),
                               ),
@@ -221,19 +214,13 @@ class _CreateMealPageState extends State<CreateMealPage> {
                           Column(
                             children: [
                               Container(
-                                  height: 80,
-                                  width: 80,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.17,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.17,
                                   child: Stack(
                                     children: [
                                       Image.asset('assets/carbs.png'),
-                                      Positioned(
-                                        left: 50,
-                                        bottom: 30,
-                                        child: Text(
-                                          tcab.toString(),
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                      )
                                     ],
                                   )),
                               SizedBox(
@@ -248,19 +235,13 @@ class _CreateMealPageState extends State<CreateMealPage> {
                           Column(
                             children: [
                               Container(
-                                  height: 80,
-                                  width: 80,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.17,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.17,
                                   child: Stack(
                                     children: [
                                       Image.asset('assets/fat.png'),
-                                      Positioned(
-                                        left: 50,
-                                        bottom: 30,
-                                        child: Text(
-                                          tfat.toString(),
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                      )
                                     ],
                                   )),
                               SizedBox(
@@ -275,19 +256,13 @@ class _CreateMealPageState extends State<CreateMealPage> {
                           Column(
                             children: [
                               Container(
-                                  height: 80,
-                                  width: 80,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.17,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.17,
                                   child: Stack(
                                     children: [
                                       Image.asset('assets/protien.png'),
-                                      Positioned(
-                                        left: 60,
-                                        bottom: 30,
-                                        child: Text(
-                                          tprot.toString(),
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                      )
                                     ],
                                   )),
                               SizedBox(
@@ -592,8 +567,8 @@ class _CreateMealPageState extends State<CreateMealPage> {
                         Column(
                           children: [
                             Container(
-                              height: 70,
-                              width: 70,
+                              height: MediaQuery.of(context).size.width * 0.15,
+                              width: MediaQuery.of(context).size.width * 0.15,
                               child: Stack(
                                 children: [
                                   Image.asset('assets/calories.png'),
@@ -620,8 +595,8 @@ class _CreateMealPageState extends State<CreateMealPage> {
                         Column(
                           children: [
                             Container(
-                              height: 70,
-                              width: 70,
+                              height: MediaQuery.of(context).size.width * 0.15,
+                              width: MediaQuery.of(context).size.width * 0.15,
                               child: Image.asset('assets/carbs.png'),
                             ),
                             SizedBox(
@@ -636,8 +611,8 @@ class _CreateMealPageState extends State<CreateMealPage> {
                         Column(
                           children: [
                             Container(
-                              height: 70,
-                              width: 70,
+                              height: MediaQuery.of(context).size.width * 0.15,
+                              width: MediaQuery.of(context).size.width * 0.15,
                               child: Image.asset(
                                 'assets/fat.png',
                               ),
@@ -654,8 +629,8 @@ class _CreateMealPageState extends State<CreateMealPage> {
                         Column(
                           children: [
                             Container(
-                              height: 70,
-                              width: 70,
+                              height: MediaQuery.of(context).size.width * 0.15,
+                              width: MediaQuery.of(context).size.width * 0.15,
                               child: Image.asset('assets/protien.png'),
                             ),
                             SizedBox(
@@ -748,7 +723,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                   ),
                   Positioned(
                     bottom: -10,
-                    left: 40,
+                    left: 30,
                     child: Container(
                       alignment: Alignment.bottomLeft,
                       child: Image.asset(
@@ -762,7 +737,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                     ),
                   ),
                   Positioned(
-                    left: 80,
+                    left: 70,
                     child: Container(
                       alignment: Alignment.bottomLeft,
                       child: Image.asset(
@@ -776,7 +751,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                     ),
                   ),
                   Positioned(
-                    left: 120,
+                    left: 100,
                     child: Container(
                       alignment: Alignment.bottomLeft,
                       child: Image.asset(
@@ -791,7 +766,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                   ),
                   SizedBox(),
                   Positioned(
-                    left: 165,
+                    left: 145,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -809,7 +784,7 @@ class _CreateMealPageState extends State<CreateMealPage> {
                     ),
                   ),
                   Positioned(
-                    left: 250,
+                    left: 230,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
